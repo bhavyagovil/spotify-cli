@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 scope = "user-read-playback-state,user-modify-playback-state,playlist-read-private,playlist-read-collaborative"
-
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=os.getenv("SPOTIPY_CLIENT_ID"),
     client_secret=os.getenv("SPOTIPY_CLIENT_SECRET"),
@@ -27,6 +26,15 @@ while True:
 
     if cmd == 'quit':
         break
+
+    elif cmd == 'x':
+        current = sp.current_playback()
+        if current and current['is_playing']:
+            sp.pause_playback()
+            print("Paused")
+        else:
+            sp.start_playback()
+            print("Resumed")
 
     elif cmd == 'n':
         sp.next_track()
@@ -80,4 +88,4 @@ while True:
         print(f"Playing album: {album['name']} by {album['artists'][0]['name']}")
 
     else:
-        print("Commands: p <song>, q <song>, pl <playlist>, pa <album>, n, quit")
+        print("Commands: p <song>, q <song>, pl <playlist>, pa <album>, n, x, quit")
