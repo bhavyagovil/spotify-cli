@@ -65,8 +65,8 @@ def cmd_playlist(name: str = Field(description="Playlist name or partial name"))
     if not matches:
         return f"No playlist found in your library for: {name}"
     playlist = matches[0]
-    sp.shuffle(True)
     sp.start_playback(context_uri=playlist['uri'])
+    sp.shuffle(True)
     return f"Shuffling playlist: {playlist['name']}"
 
 
@@ -80,8 +80,8 @@ def cmd_album(query: str = Field(description="Album name or search query")):
     if not items:
         return f"No album found for: {query}"
     album = items[0]
-    sp.shuffle(False)
     sp.start_playback(context_uri=album['uri'])
+    sp.shuffle(False)
     return f"Playing album: {album['name']} by {album['artists'][0]['name']}"
 
 
