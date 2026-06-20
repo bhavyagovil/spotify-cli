@@ -68,6 +68,15 @@ def cmd_album(arg):
     print(f"Playing album: {album['name']} by {album['artists'][0]['name']}")
 
 
+def cmd_curr():
+    current = sp.current_playback()
+    if not current or not current['item']:
+        print("Nothing playing")
+        return
+    track = current['item']
+    print(f"{track['name']} by {track['artists'][0]['name']}")
+
+
 def cmd_toggle():
     current = sp.current_playback()
     if current and current['is_playing']:
@@ -83,9 +92,9 @@ def cmd_next():
 
 
 ARG_COMMANDS = {'p': cmd_play, 'q': cmd_queue, 'pl': cmd_playlist, 'pa': cmd_album}
-NO_ARG_COMMANDS = {'x': cmd_toggle, 'n': cmd_next}
+NO_ARG_COMMANDS = {'x': cmd_toggle, 'n': cmd_next, 'curr': cmd_curr}
 
-HELP = "Commands: p <song>, q <song>, pl <playlist>, pa <album>, x, n, quit"
+HELP = "Commands: p <song>, q <song>, pl <playlist>, pa <album>, x, n, curr, quit"
 
 while True:
     try:
